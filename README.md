@@ -34,3 +34,19 @@
 
 `При необходимости прикрепитe сюда скриншоты
 ![Название скриншота](ссылка на скриншот)`
+
+## Решение
+### Задание 1 
+
+ - sudo apt install -y postgresql postgresql-contrib
+ - sudo systemctl enable postgresql
+ - wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
+ - sudo dpkg -i zabbix-release_latest_7.4+ubuntu24.04_all.deb
+ - sudo apt update
+ - sudo apt install zabbix-server-pgsql zabbix-frontend-php php8.3-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+ - sudo -u postgres createuser --pwprompt zabbix
+ - sudo -u postgres createdb -O zabbix zabbix
+ - zcat /usr/share/zabbix/sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
+ - sudo nano /etc/zabbix/zabbix_server.conf (add DBPassword=zabbix)
+ - sudo systemctl restart zabbix-server zabbix-agent apache2
+ - sudo systemctl enable zabbix-server zabbix-agent apache2
