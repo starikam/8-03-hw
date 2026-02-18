@@ -1,82 +1,84 @@
-# Домашнее задание к занятию «Система мониторинга Zabbix» - `Викторов Михаил`
-### Задание 1 
+# Домашнее задание к занятию «Система мониторинга Zabbix. Часть 2» - `Викторов Михаил`
 
-Установите Zabbix Server с веб-интерфейсом.
-
-#### Процесс выполнения
-1. Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
-2. Установите PostgreSQL. Для установки достаточна та версия, что есть в системном репозитороии Debian 11.
-3. Пользуясь конфигуратором команд с официального сайта, составьте набор команд для установки последней версии Zabbix с поддержкой PostgreSQL и Apache.
-4. Выполните все необходимые команды для установки Zabbix Server и Zabbix Web Server.
-
-#### Требования к результатам 
-1. Прикрепите в файл README.md скриншот авторизации в админке.
-2. Приложите в файл README.md текст использованных команд в GitHub.
-
----
-
-### Задание 2 
-
-Установите Zabbix Agent на два хоста.
+### Задание 1
+Создайте свой шаблон, в котором будут элементы данных, мониторящие загрузку CPU и RAM хоста.
 
 #### Процесс выполнения
-1. Выполняя ДЗ, сверяйтесь с процессом отражённым в записи лекции.
-2. Установите Zabbix Agent на 2 вирт.машины, одной из них может быть ваш Zabbix Server.
-3. Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов.
-4. Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera.
-5. Проверьте, что в разделе Latest Data начали появляться данные с добавленных агентов.
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+2. В веб-интерфейсе Zabbix Servera в разделе Templates создайте новый шаблон
+3. Создайте Item который будет собирать информацию об загрузке CPU в процентах
+4. Создайте Item который будет собирать информацию об загрузке RAM в процентах
 
-#### Требования к результатам
-1. Приложите в файл README.md скриншот раздела Configuration > Hosts, где видно, что агенты подключены к серверу
-2. Приложите в файл README.md скриншот лога zabbix agent, где видно, что он работает с сервером
-3. Приложите в файл README.md скриншот раздела Monitoring > Latest data для обоих хостов, где видны поступающие от агентов данные.
-4. Приложите в файл README.md текст использованных команд в GitHub
+#### Требования к результату
+- [ ] Прикрепите в файл README.md скриншот страницы шаблона с названием «Задание 1»
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+ ---
 
+### Задание 2
+Добавьте в Zabbix два хоста и задайте им имена <фамилия и инициалы-1> и <фамилия и инициалы-2>. Например: ivanovii-1 и ivanovii-2.
+
+#### Процесс выполнения
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+2. Установите Zabbix Agent на 2 виртмашины, одной из них может быть ваш Zabbix Server
+3. Добавьте Zabbix Server в список разрешенных серверов ваших Zabbix Agentов
+4. Добавьте Zabbix Agentов в раздел Configuration > Hosts вашего Zabbix Servera
+5. Прикрепите за каждым хостом шаблон Linux by Zabbix Agent
+6. Проверьте что в разделе Latest Data начали появляться данные с добавленных агентов
+
+#### Требования к результату
+- [ ] Результат данного задания сдавайте вместе с заданием 3
+
+ ---
+
+### Задание 3
+Привяжите созданный шаблон к двум хостам. Также привяжите к обоим хостам шаблон Linux by Zabbix Agent.
+
+#### Процесс выполнения
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+2. Зайдите в настройки каждого хоста и в разделе Templates прикрепите к этому хосту ваш шаблон
+3. Так же к каждому хосту привяжите шаблон Linux by Zabbix Agent
+4. Проверьте что в раздел Latest Data начали поступать необходимые данные из вашего шаблона
+
+#### Требования к результату
+- [ ] Прикрепите в файл README.md скриншот страницы хостов, где будут видны привязки шаблонов с названиями «Задание 2-3». Хосты должны иметь зелёный статус подключения
+
+ ---
+
+### Задание 4
+Создайте свой кастомный дашборд.
+
+#### Процесс выполнения
+1. Выполняя ДЗ сверяйтесь с процессом отражённым в записи лекции.
+2. В разделе Dashboards создайте новый дашборд
+3. Разместите на нём несколько графиков на ваше усмотрение.
+
+#### Требования к результату
+- [ ] Прикрепите в файл README.md скриншот дашборда с названием «Задание 4»
+
+ ---
 ## Решение
 ### Задание 1 
-```
- - sudo apt install -y postgresql postgresql-contrib
- - sudo systemctl enable postgresql
- - wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
- - sudo dpkg -i zabbix-release_latest_7.4+ubuntu24.04_all.deb
- - sudo apt update
- - sudo apt install zabbix-server-pgsql zabbix-frontend-php php8.3-pgsql zabbix-apache-conf zabbix-sql-scripts zabbix-agent
- - sudo -u postgres createuser --pwprompt zabbix
- - sudo -u postgres createdb -O zabbix zabbix
- - zcat /usr/share/zabbix/sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
- - sudo nano /etc/zabbix/zabbix_server.conf (add DBPassword=zabbix)
- - sudo systemctl restart zabbix-server zabbix-agent apache2
- - sudo systemctl enable zabbix-server zabbix-agent apache2
-```
 
-Авторизуемся в кабинете Zabbix:
+Скриншот созданного шаблона
 
-![Авторизация](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-21-54.png?raw=true)
+![Шаблон](https://github.com/starikam/8-04-hw/blob/main/img/2026-02-18_17-32-29.png?raw=true)
 
-### Задание 2 
+### Задание 2-3
 
-# Подключаем хосты:
-```
- - wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
- - sudo dpkg -i zabbix-release_latest_7.4+ubuntu24.04_all.deb
- - sudo apt update
- - sudo apt install zabbix-agent -y
- - sudo nano /etc/zabbix/zabbix_agentd.conf
- - sudo systemctl start zabbix-agent
- - sudo systemctl enable zabbix-agent
- - sudo systemctl status zabbix-agent
-```
+Подключили хосты (еще в предыдущей работе)
 
-![Хосты](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-49-40.png?raw=true)
+Подключили им шаблон (Test Template):
 
-# Лог агента:
-![Агент](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-54-15.png?raw=true)
+![Шаблон](https://github.com/starikam/8-04-hw/blob/main/img/2026-02-18_17-36-19.png?raw=true)
 
-# Разделы Мониторинга:
+Получаем Latest Data корректно:
 
-![Агент 1](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-50-34.png?raw=true)
+![Получение даты](https://github.com/starikam/8-04-hw/blob/main/img/2026-02-18_18-17-23.png?raw=true)
 
-![Агент 2](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-50-46.png?raw=true)
+![Получение даты](https://github.com/starikam/8-04-hw/blob/main/img/2026-02-18_18-17-33.png?raw=true)
+
+### Задание 4
+
+Сделали свой Дашборд и кинули туда красивые графики:
+
+![Графики](https://github.com/starikam/8-04-hw/blob/main/img/2026-02-18_18-08-31.png?raw=true)
