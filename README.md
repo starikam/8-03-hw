@@ -37,7 +37,7 @@
 
 ## Решение
 ### Задание 1 
-`
+```
  - sudo apt install -y postgresql postgresql-contrib
  - sudo systemctl enable postgresql
  - wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
@@ -49,7 +49,7 @@
  - zcat /usr/share/zabbix/sql-scripts/postgresql/server.sql.gz | sudo -u zabbix psql zabbix
  - sudo nano /etc/zabbix/zabbix_server.conf (add DBPassword=zabbix)
  - sudo systemctl restart zabbix-server zabbix-agent apache2
- - sudo systemctl enable zabbix-server zabbix-agent apache2`
+ - sudo systemctl enable zabbix-server zabbix-agent apache2 ```
 
 Авторизуемся в кабинете Zabbix:
 ![Авторизация](https://github.com/starikam/8-03-hw/blob/main/img/2026-02-18_15-21-54.png?raw=true)`
